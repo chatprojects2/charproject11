@@ -20,7 +20,7 @@ public class LoginForm extends JFrame implements ActionListener {
         initDisplay();
     }
 
-    void initDisplay(){
+     void initDisplay(){
         this.setTitle("Login Form");
         this.setSize(350, 600);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
