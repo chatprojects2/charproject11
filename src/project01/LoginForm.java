@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 
 public class LoginForm extends JFrame implements ActionListener {
 	// 선언부
-	String imgPath = "C:\\workspace_java\\basic1\\src\\image\\image\\talk\\";
+	String imgPath = "D:\\workspace_java\\basic1\\src\\image\\image\\talk\\";
 	ImageIcon img = new ImageIcon(imgPath + "main.png");
 	JLabel jlb_id = new JLabel("아이디");
 	JLabel jlb_pw = new JLabel("패스워드");
@@ -42,22 +42,33 @@ public class LoginForm extends JFrame implements ActionListener {
 		btn_login.addActionListener(this);
 		setContentPane(new Mypanel());
 		this.setLayout(null);
+
+		// 아이디 라인
 		jlb_id.setBounds(15, 200, 80, 40);
 		jlb_id.setFont(font);
 		jtf_id.setBounds(80, 200, 185, 40);
 		this.add(jlb_id);
 		this.add(jtf_id);
+
+		// 비밀번호 라인
 		jlb_pw.setBounds(8, 240, 80, 40);
 		jlb_pw.setFont(font);
 		jpf_pw.setBounds(80, 240, 185, 40);
 		this.add(jlb_pw);
 		this.add(jpf_pw);
+
+		// ID/PW 버튼 라인 추가
 		btn_find.setBounds(175, 285, 120, 40);
 		this.add(btn_find);
+
+		// 회원가입 버튼 라인 추가
 		btn_join.setBounds(45, 285, 120, 40);
 		this.add(btn_join);
+
+		// 로그인 버튼 라인 추가
 		btn_login.setBounds(280, 190, 40, 85);
 		this.add(btn_login);
+
 		this.setLocation(800, 250);
 		this.setSize(350, 600);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -68,25 +79,25 @@ public class LoginForm extends JFrame implements ActionListener {
 	public static void main(String[] args) {
 		new LoginForm();
 	}
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object obj = e.getSource();
-		// 로그인
+
+		// 로그인 버튼이 클릭되었을 경우
 		if (obj == btn_login) {
 			if ("".equals(jtf_id.getText()) || "".equals(jpf_pw.getText())) {
 				JOptionPane.showMessageDialog(this, "아이디와 비밀번호를 확인하세요.", "INFO", JOptionPane.INFORMATION_MESSAGE);
 				return;
 			}
+
 			try {
 				String mem_id = jtf_id.getText();
 				String mem_pw = jpf_pw.getText();
 				String mem_nick = tDao.login(mem_id, mem_pw);
-				if ("비밀번호가 맞지 않습니다.".equals(mem_nick)) {
-					JOptionPane.showMessageDialog(this, "비밀번호가 맞지 않습니다.");
-					jpf_pw.setText("");
-					return;
-				} else if ("아이디가 존재하지 않습니다.".equals(mem_nick)) {
-					JOptionPane.showMessageDialog(this, "아이디가 존재하지 않습니다.");
+
+				if ("비밀번호가 맞지 않습니다.".equals(mem_nick) || "아이디가 존재하지 않습니다.".equals(mem_nick)) {
+					JOptionPane.showMessageDialog(this, "아이디 또는 비밀번호가 틀립니다.");
 					jpf_pw.setText("");
 					return;
 				} else {
@@ -98,14 +109,16 @@ public class LoginForm extends JFrame implements ActionListener {
 					TalkClient tc = new TalkClient(this);
 				}
 			} catch (Exception ex) {
-				throw new RuntimeException(ex);
+				System.out.println(ex.toString());
 			}
 		}
-		// 회원가입 버튼 클릭 시
+		// 회원가입 버튼이 클릭된 경우
 		else if (obj == btn_join) {
-			System.out.println("회원가입 버튼 클릭됨"); // 디버깅 메시지
+			// 회원가입 화면을 띄움
 			MemberShipForm msf = new MemberShipForm();
-			//msf.setVisible(true); // 회원가입 창 표시
+			msf.setVisible(true);
+			JOptionPane.showMessageDialog(this, "회원가입요청", "INFO", JOptionPane.INFORMATION_MESSAGE);
+			return;
 		}
 	}
 }
