@@ -123,7 +123,7 @@ public class LoginForm extends JFrame implements ActionListener {
 		else if(obj == btn_find) {
 			FindIDPWForm fipf = new FindIDPWForm();
 			fipf.setVisible(true);
-			JOptionPane.showMessageDialog(this, "ID/비밀번호 찾기 요청", "INFO", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(this, "비밀번호가 맞지 않습니다.", "INFO", JOptionPane.INFORMATION_MESSAGE);
 			return;
 		}
 	}
