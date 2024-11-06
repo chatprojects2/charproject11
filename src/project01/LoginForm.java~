@@ -125,5 +125,6 @@ public class LoginForm extends JFrame implements ActionListener {
 			fip.setVisible(true);
 			return;
 			}
+		if (obj == btn_find) {
 	}
 }
