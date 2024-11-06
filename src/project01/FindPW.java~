@@ -26,6 +26,8 @@ public class FindPW extends JFrame implements ActionListener {
 
     public void initDisplay() {
         jp_center.setLayout(null);
+
+        // 컴포넌트 위치 설정
         jlb_id.setBounds(20, 20, 100, 20);
         jtf_id.setBounds(120, 20, 120, 20);
         jlb_pw.setBounds(20, 45, 100, 20);
@@ -34,6 +36,8 @@ public class FindPW extends JFrame implements ActionListener {
         jtf_name.setBounds(120, 95, 150, 20);
         jlb_email.setBounds(20, 70, 100, 20);
         jtf_email.setBounds(120, 70, 150, 20);
+
+        // 컴포넌트 추가
         jp_center.add(jlb_id);
         jp_center.add(jtf_id);
         jp_center.add(jlb_pw);
@@ -42,14 +46,24 @@ public class FindPW extends JFrame implements ActionListener {
         jp_center.add(jtf_name);
         jp_center.add(jlb_email);
         jp_center.add(jtf_email);
+
+        // 하단 버튼 추가 및 레이아웃 설정
         jp_south.setLayout(new FlowLayout(FlowLayout.RIGHT));
         jp_south.add(jbtn_ins);
         jp_south.add(jbtn_close);
-        this.add("South",jp_south);
+
+        // 버튼에 ActionListener 추가
+        jbtn_ins.addActionListener(this);
+        jbtn_close.addActionListener(this);
+
+        // 프레임에 패널 추가
+        this.add("South", jp_south);
         jsp = new JScrollPane(jp_center);
-        this.add("Center",jsp);
-        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE); // 프로그램 전체 종료가 아닌 창만 닫기
-        this.setTitle("ID/PW 찾기");
+        this.add("Center", jsp);
+
+        // 창 설정
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        this.setTitle("PW 찾기");
         this.setSize(400, 500);
         this.setVisible(true);
     }
@@ -57,9 +71,7 @@ public class FindPW extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         Object obj = e.getSource();
-        // if (obj == jbtn_zipcode) {
-        //     zcs.initDisplay();
-        // }
+
         if (obj == jbtn_ins) {
             JOptionPane.showMessageDialog(this, "찾기 버튼이 눌렸습니다.");
         } else if (obj == jbtn_close) {
@@ -71,5 +83,4 @@ public class FindPW extends JFrame implements ActionListener {
         FindPW fpw = new FindPW();
         fpw.setVisible(true);
     }
-
 }

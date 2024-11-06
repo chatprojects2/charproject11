@@ -9,8 +9,6 @@ public class FindPW extends JFrame implements ActionListener {
     JPanel jp_center = new JPanel();
     JLabel jlb_id = new JLabel("아이디");
     JTextField jtf_id = new JTextField(10);
-    JLabel jlb_pw = new JLabel("패스워드");
-    JTextField jtf_pw = new JTextField(10);
     JLabel jlb_name = new JLabel("이름");
     JTextField jtf_name = new JTextField(30);
     JLabel jlb_email = new JLabel("이메일");
@@ -30,8 +28,6 @@ public class FindPW extends JFrame implements ActionListener {
         // 컴포넌트 위치 설정
         jlb_id.setBounds(20, 20, 100, 20);
         jtf_id.setBounds(120, 20, 120, 20);
-        jlb_pw.setBounds(20, 45, 100, 20);
-        jtf_pw.setBounds(120, 45, 120, 20);
         jlb_name.setBounds(20, 95, 100, 20);
         jtf_name.setBounds(120, 95, 150, 20);
         jlb_email.setBounds(20, 70, 100, 20);
@@ -40,8 +36,6 @@ public class FindPW extends JFrame implements ActionListener {
         // 컴포넌트 추가
         jp_center.add(jlb_id);
         jp_center.add(jtf_id);
-        jp_center.add(jlb_pw);
-        jp_center.add(jtf_pw);
         jp_center.add(jlb_name);
         jp_center.add(jtf_name);
         jp_center.add(jlb_email);
@@ -63,7 +57,7 @@ public class FindPW extends JFrame implements ActionListener {
 
         // 창 설정
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        this.setTitle("ID/PW 찾기");
+        this.setTitle("PW 찾기");
         this.setSize(400, 500);
         this.setVisible(true);
     }
