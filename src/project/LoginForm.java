@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 public class LoginForm extends JFrame implements ActionListener {
 	// 선언부
 	String imgPath = "D:\\workspace_java\\basic1\\src\\image\\image\\talk\\";
@@ -121,10 +120,9 @@ public class LoginForm extends JFrame implements ActionListener {
 			return;
 		}
 		else if(obj == btn_find) {
-			FindIDPWForm fipf = new FindIDPWForm();
+			FindIDForm fipf = new FindIDForm();
 			fipf.setVisible(true);
-			JOptionPane.showMessageDialog(this, "ID/비밀번호 찾기 요청", "INFO", JOptionPane.INFORMATION_MESSAGE);
-			return;
+			JOptionPane.showMessageDialog(this, "ID 찾기 요청", "INFO", JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 }
