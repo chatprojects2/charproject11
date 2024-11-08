@@ -13,6 +13,7 @@ public class TalkClient extends JFrame implements ActionListener {
 	LoginForm loginForm = null;
 	//LoginForm loginForm = new LoginForm();
 	////////////////통신과 관련한 전역변수 추가 시작//////////////
+	ChatingRoom chatingRoom = new ChatingRoom(this);
 	Socket 				socket 	= null;
 	ObjectOutputStream 	oos 	= null;//말 하고 싶을 때
 	ObjectInputStream 	ois		= null;//듣기 할 때
@@ -53,6 +54,7 @@ public class TalkClient extends JFrame implements ActionListener {
 	public void initDisplay() {
 		//사용자의 닉네임 받기
 		this.setLayout(new GridLayout(1,2));
+		jbtn_one.addActionListener(this);
 		jp_second.setLayout(new BorderLayout());
 		jp_second.add("Center",jsp);
 		jp_second_south.setLayout(new GridLayout(2,2));
@@ -117,7 +119,7 @@ public class TalkClient extends JFrame implements ActionListener {
 		Object obj = ae.getSource();
 		String msg = jtf_msg.getText();
 		if(jbtn_one == obj) {
-			
+			chatingRoom.set(nickName,true);
 		}
 		else if(jtf_msg==obj) {
 			try {

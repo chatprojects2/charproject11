@@ -4,8 +4,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URL;
 
 public class MemberShipForm extends JFrame implements ActionListener {
+
+    public static final String KAKAO_API_KEY = "c2d95ac533dad9386cc3ab5b88a2b9a8";
     TalkDao talkDao = new TalkDao();
     JPanel jp_center = new JPanel();
     JLabel jlb_id = new JLabel("아이디");
@@ -156,14 +159,21 @@ public class MemberShipForm extends JFrame implements ActionListener {
             isPasswordVisible = !isPasswordVisible; // 상태 변경
         }
         else if (obj == jbtn_addressSearch){
-            JOptionPane.showMessageDialog(this, "주소 찾기 기능 구현하기");
+            String query = jtf_address.getText().trim();
+            if (!query.isEmpty()) {
+                jtf_address.setText(query);
+                System.out.println(query);
+            } else {
+                JOptionPane.showMessageDialog(this, "주소를 입력하세요.");
+            }
         }
     }
 
-    public static void main(String[] args) {
-        MemberShipForm msf = new MemberShipForm();
-        msf.setVisible(true);
-    }
+//    public static void main(String[] args) {
+//        MemberShipForm msf = new MemberShipForm();
+//        msf.setVisible(true);
+//    }
+
 
 
 
