@@ -1,4 +1,4 @@
-package wonjun;
+package com.lib;
 //수정하기 테스트 wonjun
 import java.sql.Connection;
 import java.sql.DriverManager;

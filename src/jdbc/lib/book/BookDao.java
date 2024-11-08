@@ -2,7 +2,9 @@ package jdbc.lib.book;
 //MVC패턴 - 데이터관련된 것은 Model계층입니다. -CRUD작업
 //select, insert, update, delete
 //import com.util.DBConnectionMGR;
-import wonjun.DBConnectionMgr;
+
+
+import com.lib.DBConnectionMgr;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

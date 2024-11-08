@@ -1,12 +1,13 @@
-package wonjun;
+package project;
 //수정완료 123123123123
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 public class LoginForm extends JFrame implements ActionListener {
+
+
 	// 선언부
-	//String imgPath = "C:\\workspace_java\\chatproject2\\src\\image\\talk";
 	String imgPath = "C:\\workspace_java\\chatproject2\\src\\image\\talk\\";
 	ImageIcon img = new ImageIcon(imgPath + "main.png");
 	JLabel jlb_id = new JLabel("아이디");
@@ -17,9 +18,8 @@ public class LoginForm extends JFrame implements ActionListener {
 	JButton btn_find = new JButton(new ImageIcon(imgPath + "ID,PW.jpg"));
 	JButton btn_join = new JButton(new ImageIcon(imgPath + "confirm.png"));
 	JButton btn_login = new JButton(new ImageIcon(imgPath + "LO.jpg"));
-	JButton btn_modify = new JButton("개인정보 수정");
-	TalkDao tDao = new TalkDao();
 	String nickName = null;
+	TalkDao tDao = new TalkDao();
 
 	// 생성자
 	public LoginForm() {
@@ -41,8 +41,6 @@ public class LoginForm extends JFrame implements ActionListener {
 		btn_find.addActionListener(this);
 		btn_join.addActionListener(this);
 		btn_login.addActionListener(this);
-		btn_modify.addActionListener(this);
-
 		setContentPane(new Mypanel());
 		this.setLayout(null);
 
@@ -71,9 +69,6 @@ public class LoginForm extends JFrame implements ActionListener {
 		// 로그인 버튼 라인 추가
 		btn_login.setBounds(280, 190, 40, 85);
 		this.add(btn_login);
-
-		btn_modify.setBounds(50,340,110,40); //수정버튼 위치
-		this.add(btn_modify);
 
 		this.setLocation(800, 250);
 		this.setSize(350, 600);
@@ -130,13 +125,6 @@ public class LoginForm extends JFrame implements ActionListener {
 			FindIDForm fipf = new FindIDForm();
 			fipf.setVisible(true);
 			JOptionPane.showMessageDialog(this, "ID 찾기 요청", "INFO", JOptionPane.INFORMATION_MESSAGE);
-		}
-
-		//개인정보 수정 버튼이 클릭된 경우
-		else if(obj == btn_modify){
-			ModifyDialog mfd = new ModifyDialog();
-			mfd.setVisible(true);
-			JOptionPane.showMessageDialog(this, "개인정보수정 요청", "INFO",JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 }

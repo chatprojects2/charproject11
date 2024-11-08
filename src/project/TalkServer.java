@@ -1,4 +1,4 @@
-package wonjun;
+package project;
 //원준 수정
 import javax.swing.*;
 import java.awt.*;
@@ -115,6 +115,7 @@ public class TalkServer extends JFrame implements Runnable{
 
 	/*******************************************************
 	 * 시스템의 오늘 날짜 정보 가져오기
+	 * @param 해당사항 없음.
 	 * @return 2020-03-13
 	 ******************************************************/
 	public String setTimer() {
