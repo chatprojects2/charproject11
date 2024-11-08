@@ -5,8 +5,10 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 public class LoginForm extends JFrame implements ActionListener {
+
+
 	// 선언부
-	String imgPath = "D:\\workspace_java\\basic1\\src\\image\\image\\talk\\";
+	String imgPath = "D:\\workspace_java\\basic1\\src\\image\\talk\\";
 	ImageIcon img = new ImageIcon(imgPath + "main.png");
 	JLabel jlb_id = new JLabel("아이디");
 	JLabel jlb_pw = new JLabel("패스워드");
@@ -16,8 +18,8 @@ public class LoginForm extends JFrame implements ActionListener {
 	JButton btn_find = new JButton(new ImageIcon(imgPath + "ID,PW.jpg"));
 	JButton btn_join = new JButton(new ImageIcon(imgPath + "confirm.png"));
 	JButton btn_login = new JButton(new ImageIcon(imgPath + "LO.jpg"));
-	TalkDao tDao = new TalkDao();
 	String nickName = null;
+	TalkDao tDao = new TalkDao();
 
 	// 생성자
 	public LoginForm() {

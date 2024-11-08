@@ -46,6 +46,9 @@ public class FindPWForm extends JFrame implements ActionListener {
         this.setTitle("PW 찾기");
         this.setSize(400, 500);
         this.setVisible(true);
+
+        jbtn_ins.addActionListener(this);
+        jbtn_close.addActionListener(this);
     }
 
     @Override

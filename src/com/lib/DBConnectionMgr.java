@@ -1,4 +1,4 @@
-package project;
+package com.lib;
 //수정하기 테스트 wonjun
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -23,7 +23,7 @@ public class DBConnectionMgr {
     PreparedStatement pstmt;//동적쿼리
     ResultSet rs;//Cursor조작하는 API제공한다.
     public final static String _DRIVER = "oracle.jdbc.driver.OracleDriver";
-    public final static String _URL = "jdbc:oracle:thin:@localhost:1521:orcl11";
+    public final static String _URL = "jdbc:oracle:thin:@localhost:1522:orcl";
     public final static String _USER = "scott";
     public final static String _PW = "tiger";
     public DBConnectionMgr() {}

@@ -1,10 +1,20 @@
 package project;
 
+import com.lib.DBConnectionMgr;
+
+
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+
 public class TalkDao {
+
     DBConnectionMgr dbMgr = DBConnectionMgr.getInstance();
     Connection conn = null;
     PreparedStatement pstmt1 = null;
@@ -73,4 +83,84 @@ public class TalkDao {
 
         return mem_nick; // 로그인 성공 시 닉네임 반환
     }
+
+    // 아이디 중복 체크
+    public boolean checkDuplicateId(String user_id) {
+        StringBuilder sql_checkId = new StringBuilder();
+        boolean isDuplicate = false;
+        try {
+            sql_checkId.append("SELECT COUNT(1) AS count FROM tomato_member WHERE mem_id = ?");
+            conn = dbMgr.getConnection();
+            pstmt1 = conn.prepareStatement(sql_checkId.toString());
+            pstmt1.setString(1, user_id);
+            rs = pstmt1.executeQuery();
+            if (rs.next()) {
+                isDuplicate = rs.getInt("count") > 0;
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (pstmt1 != null) pstmt1.close();
+                if (conn != null) conn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return isDuplicate;
+    }
+
+
+    //회원 가입 멤버 DB에 추가
+    public int insertMember(TalkVO member) {
+        int result = 0;
+        StringBuilder sql = new StringBuilder();
+        sql.append("INSERT INTO tomato_member ");
+        sql.append("(mem_id, mem_pw, mem_name, email, mem_nick) ");
+        sql.append("VALUES (?, ?, ?, ?, ?)");
+
+        try {
+            conn = dbMgr.getConnection();
+            pstmt1 = conn.prepareStatement(sql.toString());
+            pstmt1.setString(1, member.getMem_id());
+            pstmt1.setString(2, member.getMem_pw());
+            pstmt1.setString(3, member.getMem_name());
+            pstmt1.setString(4, member.getEmail());
+            pstmt1.setString(5, member.getMem_nick());
+
+            result = pstmt1.executeUpdate(); // 삽입된 행의 수 반환
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (pstmt1 != null) pstmt1.close();
+                if (conn != null) conn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return result;
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
