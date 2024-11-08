@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 public class ChatingRoom extends JFrame implements ActionListener {
 
     TalkClient client; //채팅 서버에 들어온 클라이언트 주소번지
+    String nickName;
     JPanel jp_center = new JPanel(); //색상, 정렬, 버튼 JLabel
     JScrollPane jsp_center = new JScrollPane(jp_center, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
     JPanel jp_south = new JPanel();
@@ -21,9 +22,8 @@ public class ChatingRoom extends JFrame implements ActionListener {
         this.client = client;
 
     }
-
     public void set(String nickName,boolean isView){
-
+        this.nickName = nickName;
         jtf_msg.addActionListener(this);
         jb_msg.addActionListener(this);
         jp_center.setLayout(new GridLayout(0,1)); // 대화가 언제 끝날지 모르니까 row값으로 0을 준다.
@@ -37,6 +37,7 @@ public class ChatingRoom extends JFrame implements ActionListener {
         this.setVisible(isView);
         this.setTitle(nickName+"의 채팅창");
 
+
     }
 
 
@@ -45,7 +46,8 @@ public class ChatingRoom extends JFrame implements ActionListener {
         Object obj = e.getSource();
         if(obj == jb_msg || obj == jtf_msg){
             JPanel jp_msg = new JPanel();
-            JLabel lbl_msg = new JLabel("<html><body style='width: 200px;'>" + jtf_msg.getText() + "</body></html>");
+            String message = "<html><b>" + nickName + ":</b> " + jtf_msg.getText() + "</html>";
+            JLabel lbl_msg = new JLabel("<html><body style='width: 200px;'>" +message + "</body></html>");
 
             lbl_msg.setOpaque(true);
             lbl_msg.setBorder(new EmptyBorder(10, 15, 10, 15)); // 말풍선 패딩 추가
