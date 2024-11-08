@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="ojdbc6">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/lombok-1.18.34.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../app/kosmo/product/11.1.0/db_1/jdbc/lib/ojdbc6.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/json-20210307.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/mybatis-3.5.9.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/okhttp-3.14.9.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/okio-1.17.6.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
