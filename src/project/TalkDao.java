@@ -21,6 +21,12 @@ public class TalkDao {
     PreparedStatement pstmt2 = null;
     ResultSet rs = null;
 
+
+
+
+
+
+
     public String login(String user_id, String user_pw) {
         String mem_nick = null; // 로그인 성공 시 반환될 닉네임
         StringBuilder idCheck = new StringBuilder();
@@ -118,8 +124,9 @@ public class TalkDao {
         int result = 0;
         StringBuilder sql = new StringBuilder();
         sql.append("INSERT INTO tomato_member ");
-        sql.append("(mem_id, mem_pw, mem_name, email, mem_nick) ");
-        sql.append("VALUES (?, ?, ?, ?, ?)");
+        sql.append("(mem_id, mem_pw, mem_name, email, mem_nick, Img) ");
+        //sql.append("VALUES (?, ?, ?, ?, ?)");
+        sql.append("VALUES (?, ?, ?, ?, ?, ?)");
 
         try {
             conn = dbMgr.getConnection();
@@ -129,6 +136,7 @@ public class TalkDao {
             pstmt1.setString(3, member.getMem_name());
             pstmt1.setString(4, member.getEmail());
             pstmt1.setString(5, member.getMem_nick());
+            pstmt1.setString(6, member.getImg());
 
             result = pstmt1.executeUpdate(); // 삽입된 행의 수 반환
         } catch (Exception e) {
