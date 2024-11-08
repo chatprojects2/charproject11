@@ -11,12 +11,11 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-public class TalkClient_chatUpdate extends JFrame implements ActionListener {
+public class TalkClient extends JFrame implements ActionListener {
 	////////////////통신과 관련한 전역변수 추가 시작//////////////
 	Socket 				socket 	= null;
 	ObjectOutputStream 	oos 	= null;//말 하고 싶을 때
@@ -49,9 +48,9 @@ public class TalkClient_chatUpdate extends JFrame implements ActionListener {
 	//채팅창 설정용
 	int i = 1;
 
-	public TalkClient_hanna() {}
+	public TalkClient() {}
 	//아래 생성자는 로그인폼에서 톡다오 클래스의 로그인 메소드 호출로 닉네임 받은 후에 호출되어야 한다-대화명이 필요하니깐
-	public TalkClient_hanna(LoginForm loginForm) {
+	public TalkClient(LoginForm loginForm) {
 			this.loginForm = loginForm; //안하면 NPE 발생
 		this.nickName = loginForm.nickName;
 		initDisplay();
@@ -106,7 +105,7 @@ public class TalkClient_chatUpdate extends JFrame implements ActionListener {
 	}
 	public static void main(String args[]) {
 		JFrame.setDefaultLookAndFeelDecorated(true);
-		TalkClient_hanna tc = new TalkClient_hanna();
+		TalkClient tc = new TalkClient();
 		tc.initDisplay();
 		tc.init();
 	}
@@ -121,7 +120,7 @@ public class TalkClient_chatUpdate extends JFrame implements ActionListener {
 			//서버에게 내가 입장한 사실을 알린다.(말하기)
 			oos.writeObject(100+"#"+nickName);
 			//서버에 말을 한 후 들을 준비를 한다.
-			TalkClientThread_hanna tct = new TalkClientThread_hanna(this);
+			TalkClientThread tct = new TalkClientThread(this);
 			tct.start();
 		} catch (Exception e) {
 			//예외가 발생했을 때 직접적인 원인되는 클래스명 출력하기
