@@ -4,8 +4,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URL;
 
 public class MemberShipForm extends JFrame implements ActionListener {
+
     TalkDao talkDao = new TalkDao();
     JPanel jp_center = new JPanel();
     JLabel jlb_id = new JLabel("아이디");
@@ -148,7 +150,7 @@ public class MemberShipForm extends JFrame implements ActionListener {
         else if (obj == jbtn_showPw) {
             // 패스워드 보이기 버튼 클릭 시 패스워드 보이기/숨기기
             if (isPasswordVisible) {
-                jtf_pw.setEchoChar('●'); // 숨김 모드로 변경
+                jtf_pw.setEchoChar('*'); // 숨김 모드로 변경
                 jbtn_showPw.setText("보기");
             } else {
                 jtf_pw.setEchoChar((char) 0); // 보이기 모드로 변경
@@ -157,7 +159,13 @@ public class MemberShipForm extends JFrame implements ActionListener {
             isPasswordVisible = !isPasswordVisible; // 상태 변경
         }
         else if (obj == jbtn_addressSearch){
-            JOptionPane.showMessageDialog(this, "주소 찾기 기능 구현하기");
+            String query = jtf_address.getText().trim();
+            if (!query.isEmpty()) {
+                jtf_address.setText(query);
+                System.out.println(query);
+            } else {
+                JOptionPane.showMessageDialog(this, "주소를 입력하세요.");
+            }
         }
     }
 
@@ -165,6 +173,7 @@ public class MemberShipForm extends JFrame implements ActionListener {
 //        MemberShipForm msf = new MemberShipForm();
 //        msf.setVisible(true);
 //    }
+
 
 
 

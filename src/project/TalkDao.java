@@ -2,11 +2,19 @@ package project;
 
 import com.lib.DBConnectionMgr;
 
+
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+
 public class TalkDao {
+
     DBConnectionMgr dbMgr = DBConnectionMgr.getInstance();
     Connection conn = null;
     PreparedStatement pstmt1 = null;
@@ -105,6 +113,7 @@ public class TalkDao {
     }
 
 
+    //회원 가입 멤버 DB에 추가
     public int insertMember(TalkVO member) {
         int result = 0;
         StringBuilder sql = new StringBuilder();
