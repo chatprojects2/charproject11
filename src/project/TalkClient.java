@@ -9,6 +9,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+import static java.lang.System.out;
+
 public class TalkClient extends JFrame implements ActionListener {
 	LoginForm loginForm = null;
 	//LoginForm loginForm = new LoginForm();
@@ -111,7 +113,7 @@ public class TalkClient extends JFrame implements ActionListener {
 			tct.start();
 		} catch (Exception e) {
 			//예외가 발생했을 때 직접적인 원인되는 클래스명 출력하기
-			System.out.println(e.toString());
+			out.println(e.toString());
 		}
 	}
 	@Override
@@ -158,6 +160,11 @@ public class TalkClient extends JFrame implements ActionListener {
 			}
 		}
 	}//////////////////////end of actionPerformed
+	public void sendMessage(String message) {
+		if (out != null) {
+			out.println(message);
+		}
+	}
 }
 
 
