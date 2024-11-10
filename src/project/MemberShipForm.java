@@ -122,6 +122,7 @@ public class MemberShipForm extends JFrame implements ActionListener {
             int result = talkDao.insertMember(member);
             if (result > 0) {
                 JOptionPane.showMessageDialog(this, "회원가입이 완료되었습니다.");
+                this.dispose();
             } else {
                 JOptionPane.showMessageDialog(this, "회원가입에 실패했습니다.");
             }
@@ -160,10 +161,10 @@ public class MemberShipForm extends JFrame implements ActionListener {
         }
     }
 
-    public static void main(String[] args) {
-        MemberShipForm msf = new MemberShipForm();
-        msf.setVisible(true);
-    }
+//    public static void main(String[] args) {
+//        MemberShipForm msf = new MemberShipForm();
+//        msf.setVisible(true);
+//    }
 
 
 
