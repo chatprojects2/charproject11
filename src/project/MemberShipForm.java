@@ -142,7 +142,7 @@ public class MemberShipForm extends JFrame implements ActionListener {
             // 중복 여부 확인
             boolean isDuplicate = talkDao.checkDuplicateId(userId);
             if (isDuplicate) {
-                JOptionPane.showMessageDialog(this, "이미 존재하는 아이디입니다.");
+                JOptionPane.showMessageDialog(this,"이미 존재하는 아이디입니다.","WARNING",JOptionPane.WARNING_MESSAGE);
             } else {
                 JOptionPane.showMessageDialog(this, "사용 가능한 아이디입니다.");
             }
