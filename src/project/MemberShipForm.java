@@ -12,10 +12,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class MemberShipForm extends JFrame implements ActionListener {
-
-    public static final String KAKAO_API_KEY = "c2d95ac533dad9386cc3ab5b88a2b9a8";
+    
     TalkVO tVO = null;
-
     TalkDao talkDao = new TalkDao();
     JPanel jp_center = new JPanel();
     JLabel jlb_id = new JLabel("아이디");
@@ -220,6 +218,7 @@ public class MemberShipForm extends JFrame implements ActionListener {
             int result = talkDao.insertMember(member);
             if (result > 0) {
                 JOptionPane.showMessageDialog(this, "회원가입이 완료되었습니다.");
+                this.dispose();
             } else {
                 JOptionPane.showMessageDialog(this, "회원가입에 실패했습니다.");
             }
@@ -237,7 +236,9 @@ public class MemberShipForm extends JFrame implements ActionListener {
             // 중복 여부 확인
             boolean isDuplicate = talkDao.checkDuplicateId(userId);
             if (isDuplicate) {
-                JOptionPane.showMessageDialog(this, "이미 존재하는 아이디입니다.","WARNING",JOptionPane.WARNING_MESSAGE);
+                
+                JOptionPane.showMessageDialog(this,"이미 존재하는 아이디입니다.","WARNING",JOptionPane.WARNING_MESSAGE);
+
             } else {
                 JOptionPane.showMessageDialog(this, "사용 가능한 아이디입니다.");
             }
