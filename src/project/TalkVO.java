@@ -19,6 +19,7 @@ public class TalkVO {
     private int zipcode;
     private String mem_addr;
     private String email;
+    private String Img;
 
 
 }

@@ -118,8 +118,14 @@ public class TalkClient extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent ae) {
 		Object obj = ae.getSource();
 		String msg = jtf_msg.getText();
-		if(jbtn_one == obj) {
+		if(jbtn_one == obj) { //todo 1:1 채팅방 구현하기.
 			chatingRoom.set(nickName,true);
+			try{
+				oos.writeObject(300+"#"+nickName);
+
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
 		}
 		else if(jtf_msg==obj) {
 			try {
