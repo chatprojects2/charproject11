@@ -11,6 +11,7 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 
 public class TalkDao {
@@ -143,7 +144,60 @@ public class TalkDao {
         }
         return result;
     }
+
+
+    public String findID(String name,String tel){
+        String id = null;
+        StringBuilder sql = new StringBuilder();
+        sql.append("select mem_id from tomato_member where mem_name = ? and tel = ?");
+        try{
+            conn = dbMgr.getConnection();
+            pstmt1 = conn.prepareStatement(sql.toString());
+            pstmt1.setString(1, name);
+            pstmt1.setString(2, tel);
+            rs = pstmt1.executeQuery();
+            if(rs.next()){
+                id = rs.getString("mem_id");
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return id;
+    }
+
+
+
+    public String findPW(String name,String id){
+        String pw = null;
+        StringBuilder sql = new StringBuilder();
+        sql.append("select mem_pw from tomato_member where mem_name = ? and mem_id = ?");
+        try{
+            conn = dbMgr.getConnection();
+            pstmt1 = conn.prepareStatement(sql.toString());
+            pstmt1.setString(1, name);
+            pstmt1.setString(2, id);
+            rs = pstmt1.executeQuery();
+            if(rs.next()){
+                pw = rs.getString("mem_pw");
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return pw;
+    }
+
+
+
+
+
+
+
+
+
 }
+
 
 
 

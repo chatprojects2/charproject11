@@ -23,6 +23,7 @@ public class LoginForm extends JFrame implements ActionListener {
 	JButton btn_login = new JButton(new ImageIcon(imgPath + "LO.jpg"));
 	String nickName = null;
 	TalkDao tDao = new TalkDao();
+	FindIdPwView find = new FindIdPwView(this);
 
 	// 생성자
 	public LoginForm() {
@@ -162,10 +163,9 @@ public class LoginForm extends JFrame implements ActionListener {
 			msf.setVisible(true);
 			JOptionPane.showMessageDialog(this, "회원가입요청", "INFO", JOptionPane.INFORMATION_MESSAGE);
 			return;
-		} else if (obj == btn_find) {
-			FindIDForm fipf = new FindIDForm();
-			fipf.setVisible(true);
-			JOptionPane.showMessageDialog(this, "ID 찾기 요청", "INFO", JOptionPane.INFORMATION_MESSAGE);
+		}
+		else if (obj == btn_find) {
+			find.setVisible(true);
 		}
 	}
 }
