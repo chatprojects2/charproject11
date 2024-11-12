@@ -12,7 +12,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class MemberShipForm extends JFrame implements ActionListener {
-    
+    AddressSearch addressSearch = new AddressSearch(this);
     TalkVO tVO = null;
     TalkDao talkDao = new TalkDao();
     JPanel jp_center = new JPanel();
@@ -53,6 +53,8 @@ public class MemberShipForm extends JFrame implements ActionListener {
 
         initDisplay();
     }
+
+
 
     public void setValue(TalkVO talkVO){
         if(talkVO == null){
@@ -255,13 +257,7 @@ public class MemberShipForm extends JFrame implements ActionListener {
             isPasswordVisible = !isPasswordVisible; // 상태 변경
         }
         else if (obj == jbtn_addressSearch){
-            String query = jtf_address.getText().trim();
-            if (!query.isEmpty()) {
-                jtf_address.setText(query);
-                System.out.println(query);
-            } else {
-                JOptionPane.showMessageDialog(this, "주소를 입력하세요.");
-            }
+            addressSearch.setVisible(true);
         }
 
     }
