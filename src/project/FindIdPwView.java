@@ -183,7 +183,7 @@ public class FindIdPwView extends JDialog implements ActionListener {
         jp_idmiss.setVisible(true);
         this.setTitle("아이디/비밀번호 찾기");
         this.setSize(400, 300);
-        this.setVisible(true);
+        this.setVisible(false);
         ///action
         jtf_id.setText("");
         jtf_name.setText("");
@@ -249,6 +249,5 @@ public class FindIdPwView extends JDialog implements ActionListener {
 
 
     public static void main(String[] args) {
-        new FindIdPwView(null);
     }
 }
