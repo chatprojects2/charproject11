@@ -29,8 +29,8 @@ public class AddressSearch extends JDialog implements ActionListener, MouseListe
 
     JTextField searchField = new JTextField(40);
     JButton searchButton = new JButton("검색");
-    String clientId = "YBJ9fFJCXUw7JEqRPvJo"; //애플리케이션 클라이언트 아이디
-    String clientSecret = "5fQnhGxF_L"; //애플리케이션 클라이언트 시크릿
+    String clientId = "네이버 클라이언트 아이디"; //애플리케이션 클라이언트 아이디
+    String clientSecret = "네이버 클라이언트 시크릿"; //애플리케이션 클라이언트 시크릿
     String apiURL = "https://openapi.naver.com/v1/search/local.json";
 
     
