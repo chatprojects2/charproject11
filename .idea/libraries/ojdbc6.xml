@@ -6,6 +6,9 @@
       <root url="jar://$PROJECT_DIR$/src/lib/mybatis-3.5.9.jar!/" />
       <root url="jar://$PROJECT_DIR$/src/lib/json-20210307.jar!/" />
       <root url="jar://$PROJECT_DIR$/src/jdbc/lib/ojdbc6.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/lib/gson-2.8.9.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/lib/okhttp-3.14.9.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/lib/okio-1.17.6.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

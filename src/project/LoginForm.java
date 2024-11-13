@@ -142,7 +142,6 @@ public class LoginForm extends JFrame implements ActionListener {
 
 				if ("비밀번호가 맞지 않습니다.".equals(mem_nick) || "아이디가 존재하지 않습니다.".equals(mem_nick)) {
 					JOptionPane.showMessageDialog(this, "아이디 또는 비밀번호가 틀립니다.");
-					jpf_pw.setText("");
 					return;
 				} else {
 					nickName = mem_nick;
