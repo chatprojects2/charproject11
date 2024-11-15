@@ -16,6 +16,8 @@ public class MemberShipForm extends JFrame implements ActionListener {
     public static final String KAKAO_API_KEY = "c2d95ac533dad9386cc3ab5b88a2b9a8";
     TalkVO tVO = null;
 
+    TalkLocalSerch tls = new TalkLocalSerch(this);
+
     TalkDao talkDao = new TalkDao();
     JPanel jp_center = new JPanel();
     JLabel jlb_id = new JLabel("아이디");
@@ -67,6 +69,7 @@ public class MemberShipForm extends JFrame implements ActionListener {
     }
 
     public void initDisplay() {
+
         jp_center.setLayout(null);
         jlb_id.setBounds(20, 20, 100, 20);
         jtf_id.setBounds(120, 20, 120, 20);
@@ -131,7 +134,7 @@ public class MemberShipForm extends JFrame implements ActionListener {
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE); // 프로그램 전체 종료가 아닌 창만 닫기
         this.setTitle("회원가입");
         this.setSize(400, 500);
-        this.setVisible(true);
+        this.setVisible(false);
 
 
         // 버튼 이벤트 추가해주기
@@ -258,6 +261,7 @@ public class MemberShipForm extends JFrame implements ActionListener {
             if (!query.isEmpty()) {
                 jtf_address.setText(query);
                 System.out.println(query);
+                tls.setVisible(true);
             } else {
                 JOptionPane.showMessageDialog(this, "주소를 입력하세요.");
             }
