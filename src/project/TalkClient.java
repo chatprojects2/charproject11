@@ -11,7 +11,7 @@ import java.net.Socket;
 
 public class TalkClient extends JFrame implements ActionListener {
 	LoginForm loginForm = null;
-	ChatingRoom chatingRoom = new ChatingRoom(this);
+	ChatingRoom chatingRoom = null;
 	Socket socket = null;
 	ObjectOutputStream oos = null; //말 하고 싶을 때
 	ObjectInputStream ois = null; //듣기 할 때
@@ -116,15 +116,15 @@ public class TalkClient extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent ae) {
 		Object obj = ae.getSource();
 		String msg = jtf_msg.getText();
-		if (jbtn_one == obj) { // 1:1 채팅방 구현
-			try{
-				chatingRoom.set(nickName,true);
-				oos.writeObject(300 + "#" + nickName);
-
-
-			}catch (Exception e) {
-				System.out.println(e.toString());
+		if (jbtn_one == obj) { // 1:1 채팅 버튼 클릭
+			int selectedRow = jtb.getSelectedRow();
+			if (selectedRow == -1) {
+				JOptionPane.showMessageDialog(this, "대상을 선택하세요.");
+				return;
 			}
+			String recipient = (String) dtm.getValueAt(selectedRow, 0); // 선택된 대화명 가져오기
+			chatingRoom = new ChatingRoom(this, recipient);
+			chatingRoom.set(nickName, true);
 		}
 		else if (jtf_msg == obj) {
 			try {

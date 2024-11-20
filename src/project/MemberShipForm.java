@@ -34,6 +34,9 @@ public class MemberShipForm extends JFrame implements ActionListener {
     JLabel jlb_nickname = new JLabel("닉네임");
     JTextField jtf_nickname = new JTextField(20);
 
+    JLabel zip_code = new JLabel("우편번호");
+    JTextField jtf_zipcode = new JTextField(10);
+
     JLabel jlb_address = new JLabel("주소");
     JTextField jtf_address = new JTextField(20);
     JButton jbtn_addressSearch = new JButton("주소 찾기");
@@ -89,10 +92,12 @@ public class MemberShipForm extends JFrame implements ActionListener {
         jlb_nickname.setBounds(20, 120, 100, 20);
         jtf_nickname.setBounds(120, 120, 150, 20);
 
+        zip_code.setBounds(20, 145, 100, 20);
+        jtf_zipcode.setBounds(120, 145, 150, 20);
 
-        jlb_address.setBounds(20, 145, 100, 20);
-        jtf_address.setBounds(120, 145, 150, 20);
         jbtn_addressSearch.setBounds(280, 145, 100, 20);
+        jlb_address.setBounds(20, 170, 100, 20);
+        jtf_address.setBounds(120, 170, 250, 20);
 
         jbtn_file.setBounds(20, 220, 90, 20);
         jtf_file.setBounds(120, 220, 250, 20);
@@ -117,6 +122,8 @@ public class MemberShipForm extends JFrame implements ActionListener {
         jp_center.add(jtf_file);
         jp_center.add(jlb_img);
 
+        jp_center.add(zip_code);
+        jp_center.add(jtf_zipcode);
 
         jp_center.add(jlb_address);
         jp_center.add(jtf_address);

@@ -52,12 +52,20 @@ public class TalkClientThread extends Thread {
 						String recipient = st.nextToken();  // 수신자
 						String message = st.nextToken();    // 메시지 내용
 
-						// 현재 사용자가 송신자나 수신자인 경우 채팅창 열기 및 메시지 표시
+						// 현재 사용자가 송신자나 수신자인 경우에만 메시지 표시
 						if (tc.nickName.equals(recipient) || tc.nickName.equals(sender)) {
-							if (!tc.chatingRoom.isVisible()) {
-								tc.chatingRoom.set(tc.nickName, true); // 1:1 채팅창 열기
+							if (tc.chatingRoom == null || !tc.chatingRoom.isVisible()) {
+								// 수신자가 본인일 때만 채팅창을 엽니다.
+								if (tc.nickName.equals(recipient)) {
+									tc.chatingRoom = new ChatingRoom(tc, sender); // 송신자와의 채팅창 생성
+									tc.chatingRoom.set(tc.nickName, true);
+								}
 							}
-							tc.chatingRoom.displayMessage(sender, message); // 메시지 표시
+
+							// 메시지가 송신자로부터 다시 돌아온 경우만 화면에 표시하도록 수정
+							if (!sender.equals(tc.nickName)) {
+								tc.chatingRoom.displayMessage(sender, message);
+							}
 						}
 						break;
 					}

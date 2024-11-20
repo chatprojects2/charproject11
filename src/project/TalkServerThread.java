@@ -62,18 +62,17 @@ public class TalkServerThread extends Thread {
 	}
 
 
-	// 메시지 전송 메서드 - 특정 수신자에게만 메시지 보내기
 	public void sendOneToOne(String msg, String recipient) {
 		boolean recipientFound = false; // 수신자 존재 여부 확인
 		for (TalkServerThread tst : ts.globalList) {
-			if (tst.chatName.equals(recipient)) {
-				tst.send(msg);
+			if (tst.chatName.equals(recipient)) { // 대상 클라이언트 찾기
+				tst.send(msg); // 수신자에게 메시지 전송
 				recipientFound = true;
 				ts.jta_log.append("1:1 메시지 전송 성공: " + msg + " -> " + recipient + "\n");
 				break;
 			}
 		}
-		// 수신자가 존재하지 않을 때 알림
+		// 수신자가 존재하지 않을 때 송신자에게 알림
 		if (!recipientFound) {
 			ts.jta_log.append("1:1 메시지 전송 실패 - 대상 없음: " + recipient + "\n");
 			send("300#SERVER#상대방이 현재 접속 중이 아닙니다.");
@@ -116,10 +115,11 @@ public class TalkServerThread extends Thread {
 								   +"#"+nickName
 								   +"#"+message);
 					}break;
-					case 300: { // 1:1 대화 프로토콜
+					case 300: {
 						String sender = st.nextToken();     // 송신자
 						String recipient = st.nextToken();  // 수신자
 						String message = st.nextToken();    // 메시지 내용
+//						this.chatName = recipient;
 
 						// 송신자와 수신자에게 각각 메시지 전송
 						sendOneToOne("300#" + sender + "#" + recipient + "#" + message, recipient);

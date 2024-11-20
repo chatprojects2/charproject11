@@ -7,22 +7,22 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ChatingRoom extends JFrame implements ActionListener {
-    private static final int CAPACITY = 2;
     TalkClient client;
     String nickName;
+    String recipient; // 수신자 정보 추가
     JPanel jp_center = new JPanel();
     JScrollPane jsp_center = new JScrollPane(jp_center, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
     JPanel jp_south = new JPanel();
     JTextField jtf_msg = new JTextField(20);
     JButton jb_msg = new JButton("Send");
-    int i = 1;
 
-    public ChatingRoom(TalkClient client) {
+    public ChatingRoom(TalkClient client, String recipient) {
         this.client = client;
+        this.recipient = recipient;
+        initDisplay();
     }
 
-    public void set(String nickName, boolean isView) {
-        this.nickName = nickName;
+    private void initDisplay() {
         jtf_msg.addActionListener(this);
         jb_msg.addActionListener(this);
         jp_center.setLayout(new GridLayout(0, 1));
@@ -33,14 +33,18 @@ public class ChatingRoom extends JFrame implements ActionListener {
         this.add("Center", jsp_center);
         this.add("South", jp_south);
         this.setSize(500, 400);
-        this.setVisible(isView);
+        this.setVisible(true);
+    }
+
+    public void set(String nickName, boolean isView) {
+        this.nickName = nickName;
         this.setTitle(nickName + "의 채팅창");
+        this.setVisible(isView);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Object obj = e.getSource();
-        if (obj == jb_msg || obj == jtf_msg) {
+        if (e.getSource() == jb_msg || e.getSource() == jtf_msg) {
             sendMessage();
         }
     }
@@ -49,7 +53,7 @@ public class ChatingRoom extends JFrame implements ActionListener {
         String message = jtf_msg.getText();
         if (!message.isEmpty()) {
             try {
-                client.oos.writeObject("300#" + nickName + "#" + message); // 서버로 메시지 전송
+                client.oos.writeObject("300#" + nickName + "#" + recipient + "#" + message); // 서버로 메시지 전송
                 displayMessage(nickName, message); // 본인 메시지 표시
                 jtf_msg.setText("");
             } catch (Exception e) {
@@ -65,7 +69,6 @@ public class ChatingRoom extends JFrame implements ActionListener {
         lbl_msg.setBorder(new EmptyBorder(10, 15, 10, 15));
 
         boolean isSelf = sender.equals(nickName);
-
         lbl_msg.setBackground(isSelf ? new Color(144, 238, 144) : new Color(255, 165, 0));
         lbl_msg.setForeground(isSelf ? Color.BLACK : Color.WHITE);
         jp_msg.setLayout(new FlowLayout(isSelf ? FlowLayout.RIGHT : FlowLayout.LEFT));
