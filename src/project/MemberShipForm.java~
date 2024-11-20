@@ -24,16 +24,12 @@ public class MemberShipForm extends JFrame implements ActionListener {
     JButton jbtn_idCheck = new JButton("중복 확인");
     JButton jbtn_ins = new JButton("등록");
     JButton jbtn_close = new JButton("닫기");
-
     JLabel jlb_nickname = new JLabel("닉네임");
     JTextField jtf_nickname = new JTextField(20);
-
     JLabel jlb_address = new JLabel("주소");
     JTextField jtf_address = new JTextField(20);
     JButton jbtn_addressSearch = new JButton("주소 찾기");
-
     boolean isPasswordVisible = false; // 패스워드가 보이는 상태를 저장하는 변수
-
     Search search = new Search(this);
 
     public MemberShipForm() {
@@ -148,7 +144,11 @@ public class MemberShipForm extends JFrame implements ActionListener {
                // JOptionPane.showMessageDialog(this, "주소를 입력하세요.");
             }
         }
+    // Search 클래스에서 호출할 주소 업데이트 메서드
+    public void updateAddress(String buildingName, String roadAddress, String zipCode) {
+        jtf_address.setText(buildingName + " " + roadAddress);
     }
+}
 
 //    public static void main(String[] args) {
 //        MemberShipForm msf = new MemberShipForm();

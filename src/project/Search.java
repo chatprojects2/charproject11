@@ -6,10 +6,7 @@ import okhttp3.*;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+import java.awt.event.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,12 +26,13 @@ public class Search extends JDialog implements ActionListener, ItemListener {
     JScrollPane jsp_ad = new JScrollPane(jtb_ad,
             JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
             JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-    String confmKey = "your_key";
+    String confmKey = "";
     String apiURL = "https://business.juso.go.kr/addrlink/addrLinkApi.do";
 
     public Search(MemberShipForm msf) {
         this.msf = msf;
         initDisplay();
+        addTableClickListener();
     }
 
     public void refreshData(List<Map<String, Object>> list) {
@@ -87,7 +85,23 @@ public class Search extends JDialog implements ActionListener, ItemListener {
         this.setSize(700, 500);
         this.setVisible(false); // 기본으로 비활성화, 필요시 setVisible(true) 호출
     }
+    private void addTableClickListener() {
+        jtb_ad.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int row = jtb_ad.getSelectedRow(); // 선택된 행
+                if (row >= 0) {
+                    String buildingName = (String) dtm_ad.getValueAt(row, 0); // 건물명
+                    String roadAddress = (String) dtm_ad.getValueAt(row, 1); // 도로명 주소
+                    String zipCode = (String) dtm_ad.getValueAt(row, 2); // 우편번호
 
+                    // 선택된 데이터를 회원가입 창에 기록
+                    msf.updateAddress(buildingName, roadAddress, zipCode);
+                    dispose(); // 창 닫기
+                }
+            }
+        });
+    }
     @Override
     public void actionPerformed(ActionEvent e) {
         Object obj = e.getSource();

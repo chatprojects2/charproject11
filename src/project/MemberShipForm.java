@@ -144,7 +144,11 @@ public class MemberShipForm extends JFrame implements ActionListener {
                // JOptionPane.showMessageDialog(this, "주소를 입력하세요.");
             }
         }
+    // Search 클래스에서 호출할 주소 업데이트 메서드
+    public void updateAddress(String buildingName, String roadAddress, String zipCode) {
+        jtf_address.setText(roadAddress);
     }
+}
 
 //    public static void main(String[] args) {
 //        MemberShipForm msf = new MemberShipForm();
