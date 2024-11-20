@@ -8,7 +8,6 @@ import java.net.URL;
 
 public class MemberShipForm extends JFrame implements ActionListener {
 
-    public static final String KAKAO_API_KEY = "c2d95ac533dad9386cc3ab5b88a2b9a8";
     TalkDao talkDao = new TalkDao();
     JPanel jp_center = new JPanel();
     JLabel jlb_id = new JLabel("아이디");
@@ -46,29 +45,18 @@ public class MemberShipForm extends JFrame implements ActionListener {
         jlb_id.setBounds(20, 20, 100, 20);
         jtf_id.setBounds(120, 20, 120, 20);
         jbtn_idCheck.setBounds(250, 20, 100, 20); // 아이디 중복 체크
-
         jlb_pw.setBounds(20, 45, 100, 20);
         jtf_pw.setBounds(120, 45, 120, 20);
-
         jbtn_showPw.setBounds(250, 45, 70, 20); // 패스워드 보이기 버튼 위치
-
-
         jlb_name.setBounds(20, 95, 100, 20);
         jtf_name.setBounds(120, 95, 150, 20);
-
         jlb_email.setBounds(20, 70, 100, 20);
         jtf_email.setBounds(120, 70, 150, 20);
-
-
-
         jlb_nickname.setBounds(20, 120, 100, 20);
         jtf_nickname.setBounds(120, 120, 150, 20);
-
-
         jlb_address.setBounds(20, 145, 100, 20);
         jtf_address.setBounds(120, 145, 150, 20);
         jbtn_addressSearch.setBounds(280, 145, 100, 20);
-
         jp_center.add(jbtn_idCheck); // 중복 확인 버튼 추가
         jp_center.add(jlb_id);
         jp_center.add(jtf_id);
@@ -79,17 +67,11 @@ public class MemberShipForm extends JFrame implements ActionListener {
         jp_center.add(jtf_name);
         jp_center.add(jlb_email);
         jp_center.add(jtf_email);
-
         jp_center.add(jlb_nickname);
         jp_center.add(jtf_nickname);
-
-
-
-
         jp_center.add(jlb_address);
         jp_center.add(jtf_address);
         jp_center.add(jbtn_addressSearch);
-
         jp_south.setLayout(new FlowLayout(FlowLayout.RIGHT));
         jp_south.add(jbtn_ins);
         jp_south.add(jbtn_close);
@@ -100,8 +82,6 @@ public class MemberShipForm extends JFrame implements ActionListener {
         this.setTitle("회원가입");
         this.setSize(400, 500);
         this.setVisible(true);
-
-
         // 버튼 이벤트 추가해주기
         jbtn_ins.addActionListener(this);
         jbtn_close.addActionListener(this);
@@ -175,8 +155,3 @@ public class MemberShipForm extends JFrame implements ActionListener {
 //        msf.setVisible(true);
 //    }
 
-
-
-
-
-}
