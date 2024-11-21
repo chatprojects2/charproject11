@@ -24,6 +24,7 @@ public class TalkClient extends JFrame implements ActionListener {
 	////////////////통신과 관련한 전역변수 추가  끝  //////////////
 	JPanel jp_second	  = new JPanel();
 	JPanel jp_second_south = new JPanel();
+	JButton jbtn_friend = new JButton("친구 찾기");
 	JButton jbtn_one	  = new JButton("1:1");
 	JButton jbtn_change	  = new JButton("대화명변경");
 	JButton jbtn_font	  = new JButton("글자색");
@@ -44,6 +45,7 @@ public class TalkClient extends JFrame implements ActionListener {
 	Image back = null;
 
 	LoginForm loginForm = null;
+	SearchFriend sf = new SearchFriend();
 	
 	//채팅창 설정용
 	int i = 1;
@@ -68,7 +70,8 @@ public class TalkClient extends JFrame implements ActionListener {
 		this.setLayout(new GridLayout(1,2));
 		jp_second.setLayout(new BorderLayout());
 		jp_second.add("Center",jsp);
-		jp_second_south.setLayout(new GridLayout(2,2));
+		jp_second_south.setLayout(new GridLayout(3,2));
+		jp_second_south.add(jbtn_friend);
 		jp_second_south.add(jbtn_one);
 		jp_second_south.add(jbtn_change);
 		jp_second_south.add(jbtn_font);
@@ -149,6 +152,12 @@ public class TalkClient extends JFrame implements ActionListener {
 			SwingUtilities.invokeLater(
 					() -> jsp_display.getVerticalScrollBar().setValue(jsp_display.getVerticalScrollBar().getMaximum()));
 		} //end of if(obj)
+
+		//친구 찾기
+		else if(obj == jbtn_friend) {
+			sf.initDisplay();
+		}
+
 		else if(jbtn_one == obj) {
 			
 		}
