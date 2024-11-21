@@ -62,6 +62,7 @@ public class TalkClient extends JFrame implements ActionListener {
 		jbtn_change.addActionListener(this);
 		jbtn_send.addActionListener(this);
 		jbtn_one.addActionListener(this);
+		jbtn_friend.addActionListener(this);
 	}
 	public void initDisplay() {
 		//사용자의 닉네임 받기
