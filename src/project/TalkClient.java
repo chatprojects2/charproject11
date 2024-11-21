@@ -23,6 +23,7 @@ public class TalkClient extends JFrame implements ActionListener {
 	JButton jbtn_change = new JButton("대화명변경");
 	JButton jbtn_font = new JButton("글자색");
 	JButton jbtn_exit = new JButton("나가기");
+	JButton jbtn_friend = new JButton("친구 찾기");
 	String[] cols = {"대화명"};
 	String[][] data = new String[0][1];
 	DefaultTableModel dtm = new DefaultTableModel(data, cols);
@@ -46,6 +47,7 @@ public class TalkClient extends JFrame implements ActionListener {
 		jtf_msg.addActionListener(this);
 		jbtn_exit.addActionListener(this);
 		jbtn_change.addActionListener(this);
+		jbtn_friend.addActionListener(this);
 	}
 
 	public void initDisplay() {
@@ -53,7 +55,9 @@ public class TalkClient extends JFrame implements ActionListener {
 		jbtn_one.addActionListener(this);
 		jp_second.setLayout(new BorderLayout());
 		jp_second.add("Center", jsp);
-		jp_second_south.setLayout(new GridLayout(2, 2));
+
+		jp_second_south.setLayout(new GridLayout(3,2));
+		jp_second_south.add(jbtn_friend);
 		jp_second_south.add(jbtn_one);
 		jp_second_south.add(jbtn_change);
 		jp_second_south.add(jbtn_font);
@@ -152,6 +156,13 @@ public class TalkClient extends JFrame implements ActionListener {
 				e.printStackTrace();
 			}
 		}
+		//친구 찾기
+		else if(obj == jbtn_friend) {
+			SearchFriend sf =new SearchFriend();
+
+			sf.initDisplay();
+		}
+
 	}
 
 	public void sendMessage(String message) {

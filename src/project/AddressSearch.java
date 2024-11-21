@@ -26,7 +26,7 @@ public class AddressSearch extends JDialog implements ActionListener, MouseListe
     DefaultTableModel tableModel = new DefaultTableModel(data,cols);
     JTable table = new JTable(tableModel);
     JScrollPane scrollPane = new JScrollPane(table);
-    private static final String API_KEY  = "API_KEY";
+    public String API_KEY  = "API_KEY";
     JTextField searchField = new JTextField(40);
     JButton searchButton = new JButton("검색");
 

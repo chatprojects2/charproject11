@@ -20,6 +20,7 @@ public class TalkVO {
     private String email;
     private String Img;
     private String tel;
-
+    private String Keyword;
+    private String gubun;
 
 }
