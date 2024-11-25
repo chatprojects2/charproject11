@@ -11,6 +11,9 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class TalkDao {
@@ -20,12 +23,6 @@ public class TalkDao {
     PreparedStatement pstmt1 = null;
     PreparedStatement pstmt2 = null;
     ResultSet rs = null;
-
-
-
-
-
-
 
     public String login(String user_id, String user_pw) {
         String mem_nick = null; // 로그인 성공 시 반환될 닉네임
@@ -124,9 +121,8 @@ public class TalkDao {
         int result = 0;
         StringBuilder sql = new StringBuilder();
         sql.append("INSERT INTO tomato_member ");
-        sql.append("(mem_id, mem_pw, mem_name, email, mem_nick, Img) ");
-        //sql.append("VALUES (?, ?, ?, ?, ?)");
-        sql.append("VALUES (?, ?, ?, ?, ?, ?)");
+        sql.append("(mem_id, mem_pw, mem_name, email, mem_nick) ");
+        sql.append("VALUES (?, ?, ?, ?, ?)");
 
         try {
             conn = dbMgr.getConnection();
@@ -136,7 +132,6 @@ public class TalkDao {
             pstmt1.setString(3, member.getMem_name());
             pstmt1.setString(4, member.getEmail());
             pstmt1.setString(5, member.getMem_nick());
-            pstmt1.setString(6, member.getImg());
 
             result = pstmt1.executeUpdate(); // 삽입된 행의 수 반환
         } catch (Exception e) {
@@ -151,7 +146,114 @@ public class TalkDao {
         }
         return result;
     }
+
+
+    public String findID(String name,String tel){
+        String id = null;
+        StringBuilder sql = new StringBuilder();
+        sql.append("select mem_id from tomato_member where mem_name = ? and tel = ?");
+        try{
+            conn = dbMgr.getConnection();
+            pstmt1 = conn.prepareStatement(sql.toString());
+            pstmt1.setString(1, name);
+            pstmt1.setString(2, tel);
+            rs = pstmt1.executeQuery();
+            if(rs.next()){
+                id = rs.getString("mem_id");
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return id;
+    }
+
+
+
+    public String findPW(String name,String id){
+        String pw = null;
+        StringBuilder sql = new StringBuilder();
+        sql.append("select mem_pw from tomato_member where mem_name = ? and mem_id = ?");
+        try{
+            conn = dbMgr.getConnection();
+            pstmt1 = conn.prepareStatement(sql.toString());
+            pstmt1.setString(1, name);
+            pstmt1.setString(2, id);
+            rs = pstmt1.executeQuery();
+            if(rs.next()){
+                pw = rs.getString("mem_pw");
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return pw;
+    }
+
+    //친구 찾기
+    public List<TalkVO> searchFriend(TalkVO tvo) {
+        List<TalkVO> tList = new ArrayList<>();
+        StringBuilder sql = new StringBuilder();
+        sql.append("select mem_id, mem_nick, mem_name from tomato_member");
+        if (tvo != null && "mem_id".equals(tvo.getGubun())) {
+            System.out.println("mem_id");
+            sql.append(" where mem_id like '%'||?||'%'");
+        } else if (tvo != null && "mem_nick".equals(tvo.getGubun())) {
+            System.out.println("mem_nick");
+            sql.append(" where mem_nick like '%'||?||'%'");
+        } else if (tvo != null && "mem_name".equals(tvo.getGubun())) {
+            System.out.println("mem_name");
+            sql.append(" where mem_name like '%'||?||'%'");
+        }
+        try {
+            System.out.println(sql.toString());
+            conn = dbMgr.getConnection();
+            pstmt1 = conn.prepareStatement(sql.toString());
+            //sql ?은 1번부터 시작
+            //i++ 변수 > 컬럼 변경되어도 그대로 사용할 수 있으니까
+            //변수 초기값 0 -> ++i, 1 --> i++
+            pstmt1.setString(1, tvo.getKeyword());
+            rs = pstmt1.executeQuery();
+            TalkVO tvo1 = null; ///오류해결_241112 강사님
+            while (rs.next()) {
+                tvo1 = new TalkVO(); ///오류해결_241112 강사님 - velog 오답노트
+                tvo1.setMem_id(rs.getString("mem_id"));
+                tvo1.setMem_nick(rs.getString("mem_nick"));
+                tvo1.setMem_name(rs.getString("mem_name"));
+                tList.add(tvo1);
+            }
+        } /*catch (SQLException e) {
+            System.out.println(sql.toString());
+        }*/ catch (Exception e) {
+            e.printStackTrace();
+        } finally { // 예외가 발생하더라도 무조건 실행이 되어야만 하는 것
+            //사용한 자원 반납하기 - 생성된 역순으로 해준다 - 생략하면 처리는 되지만 명시적으로 처리하는 것 - 자바튜닝
+            dbMgr.freeConnection(conn, pstmt1, rs);
+        }
+        System.out.println("tList size: " + tList.size());
+        return tList;
+    }
+
+    /*
+    회원 탈퇴 구현하기
+    Delete from tomato_member where mem_id =?
+    return result -1 (1이면 삭제성공, 0이면 실패
+     */
+    public int deleteMember(String nickName) {
+        int result = -1;
+        String sql = "DELETE FROM tomato_member WHERE mem_nick = ?"; // mem_nick 기준으로 삭제
+        try (Connection conn = dbMgr.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, nickName); // nickName 바인딩
+            result = pstmt.executeUpdate(); // 삭제된 행의 개수 반환
+        } catch (SQLException se) {
+            se.printStackTrace();
+        }
+        return result;
+    }
+
 }
+
 
 
 
