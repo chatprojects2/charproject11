@@ -105,7 +105,7 @@ public class TalkClient extends JFrame implements ActionListener {
 	public void init() {
 		try {
 			// 서버 연결 설정
-			socket = new Socket("192.168.0.29", 3003);
+			socket = new Socket("192.168.0.29", 5000);
 			oos = new ObjectOutputStream(socket.getOutputStream());
 			ois = new ObjectInputStream(socket.getInputStream());
 			// 서버에 닉네임 전달

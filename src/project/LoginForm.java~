@@ -118,13 +118,13 @@ public class LoginForm extends JFrame implements ActionListener {
 			// 회원가입 화면을 띄움
 			MemberShipForm msf = new MemberShipForm();
 			msf.setVisible(true);
-			JOptionPane.showMessageDialog(this, "회원가입요청", "INFO", JOptionPane.INFORMATION_MESSAGE);
+			//JOptionPane.showMessageDialog(this, "회원가입요청", "INFO", JOptionPane.INFORMATION_MESSAGE);
 			return;
 		}
 		else if(obj == btn_find) {
 			FindIDForm fipf = new FindIDForm();
 			fipf.setVisible(true);
-			JOptionPane.showMessageDialog(this, "ID 찾기 요청", "INFO", JOptionPane.INFORMATION_MESSAGE);
+			//JOptionPane.showMessageDialog(this, "ID 찾기 요청", "INFO", JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 }

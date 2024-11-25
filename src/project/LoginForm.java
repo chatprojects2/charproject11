@@ -1,12 +1,11 @@
 package project;
-//수정완료 123123123123
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 public class LoginForm extends JFrame implements ActionListener {
-
-
 	// 선언부
 	String imgPath = "C:\\workspace_java\\basic1\\src\\image\\image\\talk\\";
 	ImageIcon img = new ImageIcon(imgPath + "main.png");
@@ -103,14 +102,22 @@ public class LoginForm extends JFrame implements ActionListener {
 					return;
 				} else {
 					nickName = mem_nick;
+
+					// nickName 확인 및 기본값 설정
+					if (nickName == null || nickName.trim().isEmpty()) {
+						nickName = "Guest"; // 기본 대화명 설정
+						System.out.println("nickName이 null이어서 기본값으로 설정됨: " + nickName);
+					}
+
 					System.out.println("오라클 서버에서 받아온 대화명 =====> " + nickName);
 					this.setVisible(false);
 					jtf_id.setText("");
 					jpf_pw.setText("");
-					TalkClient tc = new TalkClient(this);
+					TalkClient tc = new TalkClient(this); // TalkClient로 nickName 전달
 				}
 			} catch (Exception ex) {
-				System.out.println(ex.toString());
+				System.out.println("오류 발생: " + ex.toString());
+				ex.printStackTrace();
 			}
 		}
 		// 회원가입 버튼이 클릭된 경우
@@ -118,13 +125,12 @@ public class LoginForm extends JFrame implements ActionListener {
 			// 회원가입 화면을 띄움
 			MemberShipForm msf = new MemberShipForm();
 			msf.setVisible(true);
-			//JOptionPane.showMessageDialog(this, "회원가입요청", "INFO", JOptionPane.INFORMATION_MESSAGE);
 			return;
 		}
-		else if(obj == btn_find) {
+		// ID/PW 찾기 버튼이 클릭된 경우
+		else if (obj == btn_find) {
 			FindIDForm fipf = new FindIDForm();
 			fipf.setVisible(true);
-			//JOptionPane.showMessageDialog(this, "ID 찾기 요청", "INFO", JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 }
