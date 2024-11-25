@@ -12,12 +12,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class MemberShipForm extends JFrame implements ActionListener {
-
-    public static final String KAKAO_API_KEY = "c2d95ac533dad9386cc3ab5b88a2b9a8";
+    AddressSearch addressSearch = new AddressSearch(this);
     TalkVO tVO = null;
-
-    TalkLocalSerch tls = new TalkLocalSerch(this);
-
     TalkDao talkDao = new TalkDao();
     JPanel jp_center = new JPanel();
     JLabel jlb_id = new JLabel("아이디");
@@ -37,6 +33,9 @@ public class MemberShipForm extends JFrame implements ActionListener {
 
     JLabel jlb_nickname = new JLabel("닉네임");
     JTextField jtf_nickname = new JTextField(20);
+
+    JLabel zip_code = new JLabel("우편번호");
+    JTextField jtf_zipcode = new JTextField(10);
 
     JLabel jlb_address = new JLabel("주소");
     JTextField jtf_address = new JTextField(20);
@@ -58,6 +57,8 @@ public class MemberShipForm extends JFrame implements ActionListener {
         initDisplay();
     }
 
+
+
     public void setValue(TalkVO talkVO){
         if(talkVO == null){
             setimg("");
@@ -69,7 +70,6 @@ public class MemberShipForm extends JFrame implements ActionListener {
     }
 
     public void initDisplay() {
-
         jp_center.setLayout(null);
         jlb_id.setBounds(20, 20, 100, 20);
         jtf_id.setBounds(120, 20, 120, 20);
@@ -92,10 +92,12 @@ public class MemberShipForm extends JFrame implements ActionListener {
         jlb_nickname.setBounds(20, 120, 100, 20);
         jtf_nickname.setBounds(120, 120, 150, 20);
 
+        zip_code.setBounds(20, 145, 100, 20);
+        jtf_zipcode.setBounds(120, 145, 150, 20);
 
-        jlb_address.setBounds(20, 145, 100, 20);
-        jtf_address.setBounds(120, 145, 150, 20);
         jbtn_addressSearch.setBounds(280, 145, 100, 20);
+        jlb_address.setBounds(20, 170, 100, 20);
+        jtf_address.setBounds(120, 170, 250, 20);
 
         jbtn_file.setBounds(20, 220, 90, 20);
         jtf_file.setBounds(120, 220, 250, 20);
@@ -120,6 +122,8 @@ public class MemberShipForm extends JFrame implements ActionListener {
         jp_center.add(jtf_file);
         jp_center.add(jlb_img);
 
+        jp_center.add(zip_code);
+        jp_center.add(jtf_zipcode);
 
         jp_center.add(jlb_address);
         jp_center.add(jtf_address);
@@ -134,7 +138,7 @@ public class MemberShipForm extends JFrame implements ActionListener {
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE); // 프로그램 전체 종료가 아닌 창만 닫기
         this.setTitle("회원가입");
         this.setSize(400, 500);
-        this.setVisible(false);
+        this.setVisible(true);
 
 
         // 버튼 이벤트 추가해주기
@@ -223,6 +227,7 @@ public class MemberShipForm extends JFrame implements ActionListener {
             int result = talkDao.insertMember(member);
             if (result > 0) {
                 JOptionPane.showMessageDialog(this, "회원가입이 완료되었습니다.");
+                this.dispose();
             } else {
                 JOptionPane.showMessageDialog(this, "회원가입에 실패했습니다.");
             }
@@ -240,7 +245,9 @@ public class MemberShipForm extends JFrame implements ActionListener {
             // 중복 여부 확인
             boolean isDuplicate = talkDao.checkDuplicateId(userId);
             if (isDuplicate) {
-                JOptionPane.showMessageDialog(this, "이미 존재하는 아이디입니다.");
+                
+                JOptionPane.showMessageDialog(this,"이미 존재하는 아이디입니다.","WARNING",JOptionPane.WARNING_MESSAGE);
+
             } else {
                 JOptionPane.showMessageDialog(this, "사용 가능한 아이디입니다.");
             }
@@ -248,7 +255,7 @@ public class MemberShipForm extends JFrame implements ActionListener {
         else if (obj == jbtn_showPw) {
             // 패스워드 보이기 버튼 클릭 시 패스워드 보이기/숨기기
             if (isPasswordVisible) {
-                jtf_pw.setEchoChar('●'); // 숨김 모드로 변경
+                jtf_pw.setEchoChar('*'); // 숨김 모드로 변경
                 jbtn_showPw.setText("보기");
             } else {
                 jtf_pw.setEchoChar((char) 0); // 보이기 모드로 변경
@@ -257,14 +264,7 @@ public class MemberShipForm extends JFrame implements ActionListener {
             isPasswordVisible = !isPasswordVisible; // 상태 변경
         }
         else if (obj == jbtn_addressSearch){
-            String query = jtf_address.getText().trim();
-            if (!query.isEmpty()) {
-                jtf_address.setText(query);
-                System.out.println(query);
-                tls.setVisible(true);
-            } else {
-                JOptionPane.showMessageDialog(this, "주소를 입력하세요.");
-            }
+            addressSearch.setVisible(true);
         }
 
     }

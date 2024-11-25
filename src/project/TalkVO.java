@@ -1,3 +1,4 @@
+
 package project;
 
 
@@ -6,8 +7,6 @@ import lombok.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
 
 public class TalkVO {
 
@@ -20,6 +19,8 @@ public class TalkVO {
     private String mem_addr;
     private String email;
     private String Img;
-
+    private String tel;
+    private String Keyword;
+    private String gubun;
 
 }

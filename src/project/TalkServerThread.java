@@ -48,27 +48,49 @@ public class TalkServerThread extends Thread {
 		}
 	}
 	//클라이언트에게 말하기 구현할 때 여러 명에게 동일한 메소드를 호출해야 합니다.
-	//그래서 굳이 메소드로 분리하였다.for문 안에서 send메소드를 호출하면 
+	//그래서 굳이 메소드로 분리하였다.for문 안에서 send메소드를 호출하면
 	//그 안에 writeObject가 호출됩니다.
 	//결론 : 현재 단톡방에 있는 친구들 모두에게 전달할 때 사용된다.
-	public void send(String msg) {//한 사람한테 간다.
+	// 메시지 전송 메서드 - 특정 클라이언트에게만 메시지 보내기
+	public void send(String msg) {
 		try {
 			oos.writeObject(msg);
+			oos.flush();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+
+
+	public void sendOneToOne(String msg, String recipient) {
+		boolean recipientFound = false; // 수신자 존재 여부 확인
+		for (TalkServerThread tst : ts.globalList) {
+			if (tst.chatName.equals(recipient)) { // 대상 클라이언트 찾기
+				tst.send(msg); // 수신자에게 메시지 전송
+				recipientFound = true;
+				ts.jta_log.append("1:1 메시지 전송 성공: " + msg + " -> " + recipient + "\n");
+				break;
+			}
+		}
+		// 수신자가 존재하지 않을 때 송신자에게 알림
+		if (!recipientFound) {
+			ts.jta_log.append("1:1 메시지 전송 실패 - 대상 없음: " + recipient + "\n");
+			send("300#SERVER#상대방이 현재 접속 중이 아닙니다.");
+		}
+	}
+
+
 	//듣고 말하는 구간이다. - 분리하지 않고 run메소드 안에서 한 번에 하나요?
 	//서버는 듣고 말하는 것이다. 말을 지어내지 않는다.
 	public void run() {
-		String msg = null;//청취한 메시지를 담는 변수이다. 
+		String msg = null;//청취한 메시지를 담는 변수이다.
 		boolean isStop = false;//무한 반복
 		try {
 			//while(true) {//무한루프에 빠질 수 있다.
 			//라벨문을 while문 앞에 사용했으므로 70~109번 블록 몽땅 빠져나감.110으로 간다.
 			run_start://라벨문이다.강퇴 혹은 강제 종료 while문 탈출함
 			while(!isStop) {
-				//입장에 대한 처리는 클라이언트가 서버소켓에 접속했을 때 
+				//입장에 대한 처리는 클라이언트가 서버소켓에 접속했을 때
 				//TalkServerThread를 인스턴스화 하고 괄호안에 this를 붙여서 생성자를 호출하였다.
 				//바로 여기서 입장처리는 끝냈다.
 				msg = (String)ois.readObject();
@@ -84,7 +106,7 @@ public class TalkServerThread extends Thread {
 				}
 				switch(protocol) {
 					case 200:{
-						
+
 					}break;
 					case 201:{//다자간 대화하기 201#키위#오늘 스터디할까?
 						String nickName = st.nextToken();//키위
@@ -93,6 +115,17 @@ public class TalkServerThread extends Thread {
 								   +"#"+nickName
 								   +"#"+message);
 					}break;
+					case 300: {
+						String sender = st.nextToken();     // 송신자
+						String recipient = st.nextToken();  // 수신자
+						String message = st.nextToken();    // 메시지 내용
+//						this.chatName = recipient;
+
+						// 송신자와 수신자에게 각각 메시지 전송
+						sendOneToOne("300#" + sender + "#" + recipient + "#" + message, recipient);
+						sendOneToOne("300#" + sender + "#" + recipient + "#" + message, sender);
+						break;
+					}
 					case 202:{
 						String nickName = st.nextToken();
 						String afterName = st.nextToken();
@@ -110,7 +143,7 @@ public class TalkServerThread extends Thread {
 								+"#"+nickName);
 					}break run_start;
 				}/////////////end of switch
-			}/////////////////end of while			
+			}/////////////////end of while
 			///////// 여기로 이동한다.
 		} catch (Exception e) {
 			// TODO: handle exception

@@ -4,6 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+
 public class LoginForm extends JFrame implements ActionListener {
 
 
@@ -13,13 +16,14 @@ public class LoginForm extends JFrame implements ActionListener {
 	JLabel jlb_id = new JLabel("아이디");
 	JLabel jlb_pw = new JLabel("패스워드");
 	Font font = new Font("휴먼매직체", Font.BOLD, 18);
-	JTextField jtf_id = new JTextField("tomato");
-	JPasswordField jpf_pw = new JPasswordField("123");
+	JTextField jtf_id = new JTextField("아이디를 입력해주세요");
+	JPasswordField jpf_pw = new JPasswordField();
 	JButton btn_find = new JButton(new ImageIcon(imgPath + "ID,PW.jpg"));
 	JButton btn_join = new JButton(new ImageIcon(imgPath + "confirm.png"));
 	JButton btn_login = new JButton(new ImageIcon(imgPath + "LO.jpg"));
 	String nickName = null;
 	TalkDao tDao = new TalkDao();
+	FindIdPwView find = new FindIdPwView(this);
 
 	// 생성자
 	public LoginForm() {
@@ -44,29 +48,29 @@ public class LoginForm extends JFrame implements ActionListener {
 		setContentPane(new Mypanel());
 		this.setLayout(null);
 
-		// 아이디 라인
+
 		jlb_id.setBounds(15, 200, 80, 40);
 		jlb_id.setFont(font);
 		jtf_id.setBounds(80, 200, 185, 40);
 		this.add(jlb_id);
 		this.add(jtf_id);
 
-		// 비밀번호 라인
+
 		jlb_pw.setBounds(8, 240, 80, 40);
 		jlb_pw.setFont(font);
 		jpf_pw.setBounds(80, 240, 185, 40);
 		this.add(jlb_pw);
 		this.add(jpf_pw);
 
-		// ID/PW 버튼 라인 추가
+
 		btn_find.setBounds(175, 285, 120, 40);
 		this.add(btn_find);
 
-		// 회원가입 버튼 라인 추가
+
 		btn_join.setBounds(45, 285, 120, 40);
 		this.add(btn_join);
 
-		// 로그인 버튼 라인 추가
+
 		btn_login.setBounds(280, 190, 40, 85);
 		this.add(btn_login);
 
@@ -74,7 +78,46 @@ public class LoginForm extends JFrame implements ActionListener {
 		this.setSize(350, 600);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setVisible(true);
+
+
+		jpf_pw.setEchoChar((char) 0); // 비밀번호 가리기 해제
+		jpf_pw.setText("비밀번호를 입력해주세요");
+
+		jpf_pw.addFocusListener(new FocusListener() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				if (String.valueOf(jpf_pw.getPassword()).equals("비밀번호를 입력해주세요")) {
+					jpf_pw.setText("");
+					jpf_pw.setEchoChar('*'); // 가리기 설정
+				}
+			}
+
+			@Override
+			public void focusLost(FocusEvent e) {
+				if (String.valueOf(jpf_pw.getPassword()).isEmpty()) {
+					jpf_pw.setEchoChar((char) 0); // 가리기 해제
+					jpf_pw.setText("비밀번호를 입력해주세요");
+				}
+			}
+		});
+
+		jtf_id.addFocusListener(new FocusListener() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				if (jtf_id.getText().equals("아이디를 입력해주세요")) {
+					jtf_id.setText("");
+				}
+			}
+
+			@Override
+			public void focusLost(FocusEvent e) {
+				if (jtf_id.getText().isEmpty()) {
+					jtf_id.setText("아이디를 입력해주세요");
+				}
+			}
+		});
 	}
+
 
 	// 메인 메소드
 	public static void main(String[] args) {
@@ -99,7 +142,6 @@ public class LoginForm extends JFrame implements ActionListener {
 
 				if ("비밀번호가 맞지 않습니다.".equals(mem_nick) || "아이디가 존재하지 않습니다.".equals(mem_nick)) {
 					JOptionPane.showMessageDialog(this, "아이디 또는 비밀번호가 틀립니다.");
-					jpf_pw.setText("");
 					return;
 				} else {
 					nickName = mem_nick;
@@ -121,10 +163,11 @@ public class LoginForm extends JFrame implements ActionListener {
 			JOptionPane.showMessageDialog(this, "회원가입요청", "INFO", JOptionPane.INFORMATION_MESSAGE);
 			return;
 		}
-		else if(obj == btn_find) {
-			FindIDForm fipf = new FindIDForm();
-			fipf.setVisible(true);
-			JOptionPane.showMessageDialog(this, "ID 찾기 요청", "INFO", JOptionPane.INFORMATION_MESSAGE);
+		else if (obj == btn_find) {
+			find.setVisible(true);
 		}
 	}
 }
+
+
+
