@@ -12,6 +12,7 @@ import java.net.Socket;
 public class TalkClient extends JFrame implements ActionListener {
 	LoginForm loginForm = null;
 	ChatingRoom chatingRoom = null;
+	MembershipWithdrawal membershipWithdrawal = null;
 	Socket socket = null;
 	ObjectOutputStream oos = null; //말 하고 싶을 때
 	ObjectInputStream ois = null; //듣기 할 때
@@ -23,6 +24,7 @@ public class TalkClient extends JFrame implements ActionListener {
 	JButton jbtn_change = new JButton("대화명변경");
 	JButton jbtn_font = new JButton("글자색");
 	JButton jbtn_exit = new JButton("나가기");
+	JButton jbtn_unsubscribe = new JButton("회원탈퇴");
 	JButton jbtn_friend = new JButton("친구 찾기");
 	String[] cols = {"대화명"};
 	String[][] data = new String[0][1];
@@ -48,6 +50,8 @@ public class TalkClient extends JFrame implements ActionListener {
 		jbtn_exit.addActionListener(this);
 		jbtn_change.addActionListener(this);
 		jbtn_friend.addActionListener(this);
+		jbtn_unsubscribe.addActionListener(this);
+
 	}
 
 	public void initDisplay() {
@@ -61,6 +65,7 @@ public class TalkClient extends JFrame implements ActionListener {
 		jp_second_south.add(jbtn_one);
 		jp_second_south.add(jbtn_change);
 		jp_second_south.add(jbtn_font);
+		jp_second_south.add(jbtn_unsubscribe);
 		jp_second_south.add(jbtn_exit);
 		jp_second.add("South", jp_second_south);
 		jp_first.setLayout(new BorderLayout());
@@ -163,6 +168,30 @@ public class TalkClient extends JFrame implements ActionListener {
 			sf.initDisplay();
 		}
 
+		else if(obj == jbtn_unsubscribe) {
+			int confirm = JOptionPane.showConfirmDialog(
+					this,
+					"정말 회원 탈퇴를 진행하시겠습니까?",
+					"회원 탈퇴",
+					JOptionPane.YES_NO_OPTION
+			);
+			if (confirm == JOptionPane.YES_OPTION) {
+				// 현재 로그인된 nickName을 기반으로 삭제 요청
+				TalkDao dao = new TalkDao();
+				int result = dao.deleteMember(nickName); // nickName 사용
+				if (result > 0) {
+					JOptionPane.showMessageDialog(this, "회원 탈퇴가 완료되었습니다.");
+					try {
+						oos.writeObject(500 + "#" + nickName); // 서버에 탈퇴 알림
+						System.exit(0); // 클라이언트 종료
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				} else {
+					JOptionPane.showMessageDialog(this, "회원 탈퇴 중 문제가 발생했습니다. 다시 시도해주세요.");
+				}
+			}
+		}
 	}
 
 	public void sendMessage(String message) {

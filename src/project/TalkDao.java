@@ -235,6 +235,30 @@ public class TalkDao {
     }
 
 
+    public int deleteMember(String userId) {
+        int result = 0;  // 삭제된 행의 수를 반환할 변수
+        StringBuilder sql = new StringBuilder();
+        sql.append("DELETE FROM tomato_member WHERE mem_nick = ?");  // 회원 삭제 쿼리
+
+        try {
+            conn = dbMgr.getConnection();  // DB 연결
+            pstmt1 = conn.prepareStatement(sql.toString());  // 쿼리 준비
+            pstmt1.setString(1, userId);  // 쿼리에 회원 ID 설정
+            result = pstmt1.executeUpdate();  // 쿼리 실행, 삭제된 행의 수 반환
+        } catch (Exception e) {
+            e.printStackTrace();  // 예외 발생 시 에러 출력
+        } finally {
+            try {
+                if (pstmt1 != null) pstmt1.close();  // PreparedStatement 자원 해제
+                if (conn != null) conn.close();  // Connection 자원 해제
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return result;  // 삭제 결과 반환
+    }
+
 
 
 

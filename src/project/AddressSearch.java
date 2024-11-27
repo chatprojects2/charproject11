@@ -26,7 +26,7 @@ public class AddressSearch extends JDialog implements ActionListener, MouseListe
     DefaultTableModel tableModel = new DefaultTableModel(data,cols);
     JTable table = new JTable(tableModel);
     JScrollPane scrollPane = new JScrollPane(table);
-    public String API_KEY  = "API_KEY";
+    public String API_KEY  = "U01TX0FVVEgyMDI0MTExNDE2NDYyMzExNTIzNzI=";
     JTextField searchField = new JTextField(40);
     JButton searchButton = new JButton("검색");
 
@@ -45,7 +45,7 @@ public List<Map<String, Object>> addressSearch(String query) {
     OkHttpClient client = new OkHttpClient().newBuilder()
             .build();
     Request request = new Request.Builder()
-            .url("https://business.juso.go.kr/addrlink/addrLinkApi.do?confmKey="+API_KEY+"=&keyword=" + query + "&resultType=json&countPerPage=30")
+            .url("https://business.juso.go.kr/addrlink/addrLinkApi.do?confmKey=U01TX0FVVEgyMDI0MTExNDE2NDYyMzExNTIzNzI=&keyword=" + query + "&resultType=json&countPerPage=30")
             .get() // GET 메소드를 명시
             .addHeader("Cookie", "clientid=010040776024; elevisor_for_j2ee_uid=0a48w3jr8zwjf")
             .build();

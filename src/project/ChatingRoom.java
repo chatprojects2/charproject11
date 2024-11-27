@@ -33,7 +33,7 @@ public class ChatingRoom extends JFrame implements ActionListener {
         this.add("Center", jsp_center);
         this.add("South", jp_south);
         this.setSize(500, 400);
-        this.setVisible(true);
+        this.setVisible(false);
     }
 
     public void set(String nickName, boolean isView) {
