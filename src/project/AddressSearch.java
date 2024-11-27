@@ -155,7 +155,7 @@ public List<Map<String, Object>> addressSearch(String query) {
                         String zipCode = (String) tableModel.getValueAt(row, 0);
                         // 두 번째 열 데이터(도로명 주소) 가져오기
                         String roadAddress = (String) tableModel.getValueAt(row, 1);
-                        System.out.println("선택된 행의 정보: 우편번호=" + zipCode + ", 도로명 주소=" + roadAddress);
+//                        System.out.println("선택된 행의 정보: 우편번호=" + zipCode + ", 도로명 주소=" + roadAddress);
 
                         if (memberShipForm != null) {
                             memberShipForm.jtf_zipcode.setText(zipCode);

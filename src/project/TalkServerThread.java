@@ -75,7 +75,7 @@ public class TalkServerThread extends Thread {
 		// 수신자가 존재하지 않을 때 송신자에게 알림
 		if (!recipientFound) {
 			ts.jta_log.append("1:1 메시지 전송 실패 - 대상 없음: " + recipient + "\n");
-			send("300#SERVER#상대방이 현재 접속 중이 아닙니다.");
+			send("상대방이 현재 접속 중이 아닙니다.");
 		}
 	}
 

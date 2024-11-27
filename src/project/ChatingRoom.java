@@ -53,9 +53,10 @@ public class ChatingRoom extends JFrame implements ActionListener {
         String message = jtf_msg.getText();
         if (!message.isEmpty()) {
             try {
+
                 client.oos.writeObject("300#" + nickName + "#" + recipient + "#" + message); // 서버로 메시지 전송
                 displayMessage(nickName, message); // 본인 메시지 표시
-                jtf_msg.setText("");
+                jtf_msg.setText(""); //메시지창 초기화
             } catch (Exception e) {
                 e.printStackTrace();
             }
