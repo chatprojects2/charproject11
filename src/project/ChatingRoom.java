@@ -33,7 +33,7 @@ public class ChatingRoom extends JFrame implements ActionListener {
         this.add("Center", jsp_center);
         this.add("South", jp_south);
         this.setSize(500, 400);
-        this.setVisible(true);
+        this.setVisible(false);
     }
 
     public void set(String nickName, boolean isView) {
@@ -53,9 +53,10 @@ public class ChatingRoom extends JFrame implements ActionListener {
         String message = jtf_msg.getText();
         if (!message.isEmpty()) {
             try {
+
                 client.oos.writeObject("300#" + nickName + "#" + recipient + "#" + message); // 서버로 메시지 전송
                 displayMessage(nickName, message); // 본인 메시지 표시
-                jtf_msg.setText("");
+                jtf_msg.setText(""); //메시지창 초기화
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -77,6 +78,8 @@ public class ChatingRoom extends JFrame implements ActionListener {
         jp_center.add(jp_msg);
         jp_center.revalidate();
         jp_center.repaint();
-        jsp_center.getVerticalScrollBar().setValue(jsp_center.getVerticalScrollBar().getMaximum());
+        SwingUtilities.invokeLater(() -> {
+            jsp_center.getVerticalScrollBar().setValue(jsp_center.getVerticalScrollBar().getMaximum());
+        });
     }
 }

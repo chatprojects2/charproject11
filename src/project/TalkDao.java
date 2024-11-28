@@ -121,8 +121,8 @@ public class TalkDao {
         int result = 0;
         StringBuilder sql = new StringBuilder();
         sql.append("INSERT INTO tomato_member ");
-        sql.append("(mem_id, mem_pw, mem_name, email, mem_nick) ");
-        sql.append("VALUES (?, ?, ?, ?, ?)");
+        sql.append("(mem_id, mem_pw, mem_name, email, mem_nick, zipcode, mem_addr) ");
+        sql.append("VALUES (?, ?, ?, ?, ?, ?, ?)");
 
         try {
             conn = dbMgr.getConnection();
@@ -132,6 +132,8 @@ public class TalkDao {
             pstmt1.setString(3, member.getMem_name());
             pstmt1.setString(4, member.getEmail());
             pstmt1.setString(5, member.getMem_nick());
+            pstmt1.setString(6, member.getZipcode());
+            pstmt1.setString(7, member.getMem_addr());
 
             result = pstmt1.executeUpdate(); // 삽입된 행의 수 반환
         } catch (Exception e) {
@@ -148,15 +150,15 @@ public class TalkDao {
     }
 
 
-    public String findID(String name,String tel){
+    public String findID(String name,String email){
         String id = null;
         StringBuilder sql = new StringBuilder();
-        sql.append("select mem_id from tomato_member where mem_name = ? and tel = ?");
+        sql.append("select mem_id from tomato_member where mem_name = ? and email = ?");
         try{
             conn = dbMgr.getConnection();
             pstmt1 = conn.prepareStatement(sql.toString());
             pstmt1.setString(1, name);
-            pstmt1.setString(2, tel);
+            pstmt1.setString(2, email);
             rs = pstmt1.executeQuery();
             if(rs.next()){
                 id = rs.getString("mem_id");
@@ -195,7 +197,9 @@ public class TalkDao {
         List<TalkVO> tList = new ArrayList<>();
         StringBuilder sql = new StringBuilder();
         sql.append("select mem_id, mem_nick, mem_name from tomato_member");
-        if (tvo != null && "mem_id".equals(tvo.getGubun())) {
+        if (tvo != null && "all".equals(tvo.getGubun())) {
+            System.out.println("mem_id");
+        }else if (tvo != null && "mem_id".equals(tvo.getGubun())) {
             System.out.println("mem_id");
             sql.append(" where mem_id like '%'||?||'%'");
         } else if (tvo != null && "mem_nick".equals(tvo.getGubun())) {
@@ -234,23 +238,60 @@ public class TalkDao {
         return tList;
     }
 
-    /*
-    회원 탈퇴 구현하기
-    Delete from tomato_member where mem_id =?
-    return result -1 (1이면 삭제성공, 0이면 실패
-     */
-    public int deleteMember(String nickName) {
-        int result = -1;
-        String sql = "DELETE FROM tomato_member WHERE mem_nick = ?"; // mem_nick 기준으로 삭제
-        try (Connection conn = dbMgr.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, nickName); // nickName 바인딩
-            result = pstmt.executeUpdate(); // 삭제된 행의 개수 반환
-        } catch (SQLException se) {
-            se.printStackTrace();
+
+    public int deleteMember(String userId) {
+        int result = 0;  // 삭제된 행의 수를 반환할 변수
+        StringBuilder sql = new StringBuilder();
+        sql.append("DELETE FROM tomato_member WHERE mem_nick = ?");  // 회원 삭제 쿼리
+
+        try {
+            conn = dbMgr.getConnection();  // DB 연결
+            pstmt1 = conn.prepareStatement(sql.toString());  // 쿼리 준비
+            pstmt1.setString(1, userId);  // 쿼리에 회원 ID 설정
+            result = pstmt1.executeUpdate();  // 쿼리 실행, 삭제된 행의 수 반환
+        } catch (Exception e) {
+            e.printStackTrace();  // 예외 발생 시 에러 출력
+        } finally {
+            try {
+                if (pstmt1 != null) pstmt1.close();  // PreparedStatement 자원 해제
+                if (conn != null) conn.close();  // Connection 자원 해제
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
+
+        return result;  // 삭제 결과 반환
+    }
+
+    public int updateName(String nickName,String aftetName){
+        int result = -1;  // 삭제된 행의 수를 반환할 변수
+        StringBuilder sql = new StringBuilder();
+        sql.append("UPDATE tomato_member SET mem_nick = ? WHERE mem_nick = ?");  // 회원 삭제 쿼리
+
+        try {
+            conn = dbMgr.getConnection();  // DB 연결
+            pstmt1 = conn.prepareStatement(sql.toString());  // 쿼리 준비
+            pstmt1.setString(1,aftetName);
+            pstmt1.setString(2, nickName);  // 쿼리에 회원 ID 설정
+            result = pstmt1.executeUpdate();  // 쿼리 실행, 삭제된 행의 수 반환
+        } catch (Exception e) {
+            e.printStackTrace();  // 예외 발생 시 에러 출력
+        } finally {
+            try {
+                if (pstmt1 != null) pstmt1.close();  // PreparedStatement 자원 해제
+                if (conn != null) conn.close();  // Connection 자원 해제
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
         return result;
     }
+
+
+
+
+
 
 }
 

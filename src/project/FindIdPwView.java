@@ -17,7 +17,7 @@ public class FindIdPwView extends JDialog implements ActionListener {
     JPanel jp_north      = new JPanel();
     JLabel jlb_idfind     = new JLabel();//2번 도화지에 붙이는 JLabel
     JLabel jlb_name      = new JLabel("이름"); //1번 도화지에 붙는 JLabel
-    JLabel jlb_phone      = new JLabel("전화번호"); //1번 도화지에 붙는 JLabel
+    JLabel jlb_phone      = new JLabel("이메일"); //1번 도화지에 붙는 JLabel
     JLabel jlb_id          = new JLabel("아이디"); //3번 도화지에 붙는 JLabel
     JLabel jlb_name2     = new JLabel("이름"); //3번 도화지에 붙는 JLabel
     JLabel jlb_pwupdate   = new JLabel("비밀번호");

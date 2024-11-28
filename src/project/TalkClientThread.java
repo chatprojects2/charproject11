@@ -1,5 +1,6 @@
 package project;
 
+import javax.swing.*;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
@@ -22,7 +23,17 @@ public class TalkClientThread extends Thread {
 				msg = (String) tc.ois.readObject();
 				StringTokenizer st = null;
 				int protocol = 0;//100|200|201|202|500
-				if (msg != null) {
+				if (msg.contains("이미 접속한 사용자입니다.")) {
+					// LoginForm에 로그인 중복할 때 경고창 표시 요청
+					SwingUtilities.invokeLater(new Runnable() {
+						public void run() {
+							tc.setVisible(false);
+							JOptionPane.showMessageDialog(null, "이미 접속한 사용자입니다.", "로그인 오류", JOptionPane.ERROR_MESSAGE);
+
+						}
+					});
+				}
+				else if (msg != null) {
 					st = new StringTokenizer(msg, "#");
 					protocol = Integer.parseInt(st.nextToken());//100
 				}

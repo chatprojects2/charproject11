@@ -26,15 +26,20 @@ public class TalkServerThread extends Thread {
 			//파라미터 자리가 단 두 자리뿐 :앞자리는 제네릭타입, 뒷자리는 Vector
 			//TalkServer의 run 메소드 안에서 인스턴스화됨 ts.globalList.size() = 0 이다.
 			//사이즈가 0이므로 서버에 처음 들어온 사람은 for문 실행하지 않음
-			for(TalkServerThread tst:ts.globalList) {//반복문 돌린다.- 개선된 for문이다. - 전체를 모두 출력할 때
-			//이전에 입장해 있는 친구들 정보 받아내기
-				//String currentName = tst.chatName;
-				this.send(100+"#"+tst.chatName);
+			synchronized (ts.globalList) {
+				for (TalkServerThread tst : ts.globalList) {//반복문 돌린다.- 개선된 for문이다. - 전체를 모두 출력할 때
+					//이전에 입장해 있는 친구들 정보 받아내기
+					//String currentName = tst.chatName;
+					if (tst.chatName.equals(chatName)) {
+						send("이미 접속한 사용자입니다.");
+						return;
+					} else this.send(100 + "#" + tst.chatName);
+				}
+				//현재 서버에 입장한 첫번째 클라이언트가 Vector에 추가됨
+				ts.globalList.add(this);
+				//메소드 앞에 this가 있다면 현재 메모리에 로딩되어 있는 클래스 말함
+				this.broadCasting(msg);
 			}
-			//현재 서버에 입장한 첫번째 클라이언트가 Vector에 추가됨
-			ts.globalList.add(this);
-			//메소드 앞에 this가 있다면 현재 메모리에 로딩되어 있는 클래스 말함
-			this.broadCasting(msg);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
@@ -75,7 +80,7 @@ public class TalkServerThread extends Thread {
 		// 수신자가 존재하지 않을 때 송신자에게 알림
 		if (!recipientFound) {
 			ts.jta_log.append("1:1 메시지 전송 실패 - 대상 없음: " + recipient + "\n");
-			send("300#SERVER#상대방이 현재 접속 중이 아닙니다.");
+			send("상대방이 현재 접속 중이 아닙니다.");
 		}
 	}
 

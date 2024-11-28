@@ -222,6 +222,9 @@ public class MemberShipForm extends JFrame implements ActionListener {
             member.setMem_pw(new String(jtf_pw.getPassword()));
             member.setMem_name(jtf_name.getText().trim());
             member.setMem_nick(jtf_nickname.getText().trim());
+            member.setZipcode(jtf_zipcode.getText().trim());
+            member.setMem_addr(jtf_address.getText().trim());
+
             member.setEmail(jtf_email.getText().trim());
             member.setImg(getimg());
             int result = talkDao.insertMember(member);

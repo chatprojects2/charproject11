@@ -15,7 +15,7 @@ public class TalkVO {
     private String mem_nick;
     private String mem_name;
     private String gender;
-    private int zipcode;
+    private String zipcode;
     private String mem_addr;
     private String email;
     private String Img;

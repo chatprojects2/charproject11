@@ -127,7 +127,6 @@ public class LoginForm extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object obj = e.getSource();
-
 		// 로그인 버튼이 클릭되었을 경우
 		if (obj == btn_login) {
 			if ("".equals(jtf_id.getText()) || "".equals(jpf_pw.getText())) {
