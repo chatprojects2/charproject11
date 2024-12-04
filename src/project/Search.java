@@ -26,7 +26,7 @@ public class Search extends JDialog implements ActionListener, ItemListener {
     JScrollPane jsp_ad = new JScrollPane(jtb_ad,
             JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
             JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-    String confmKey = "U01TX0FVVEgyMDI0MTExNDE3NDYwMjExNTIzODY=";
+    String confmKey = "";
     String apiURL = "https://business.juso.go.kr/addrlink/addrLinkApi.do";
 
     public Search(MemberShipForm msf) {
